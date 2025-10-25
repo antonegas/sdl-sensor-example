@@ -32,6 +32,24 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
         return SDL_APP_FAILURE;
     }
 
+    SDL_SensorID *sensors;
+    int num_sensors, i;
+
+    sensors = SDL_GetSensors(&num_sensors);
+
+    if (sensors) {
+        for (i = 0; i < num_sensors; ++i) {
+            if (SDL_GetSensorTypeForID(sensors[i]) != SDL_SENSOR_UNKNOWN) {
+                SDL_Sensor *sensor = SDL_OpenSensor(sensors[i]);
+                if (!sensor) {
+                    SDL_Log("Couldn't open sensor %" SDL_PRIu32 ": %s", sensors[i], SDL_GetError());
+                }
+            }
+        }
+        SDL_free(sensors);
+    }
+
+    /* Init reading */
     if (!(reading = (SensorReading *)SDL_calloc(1, sizeof(*reading)))) {
         return SDL_APP_FAILURE;
     }
