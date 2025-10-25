@@ -44,6 +44,8 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
     reading->rotY = 0.0;
     reading->rotZ = 0.0;
 
+    SDL_Log("Is enabled %d", SDL_EventEnabled(SDL_EVENT_SENSOR_UPDATE));
+
     return SDL_APP_CONTINUE;
 }
 
