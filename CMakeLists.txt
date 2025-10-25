@@ -22,7 +22,7 @@ target_link_libraries(mygame PRIVATE SDL3::SDL3)
 
 # Generate .html file for web
 if(EMSCRIPTEN)
-    set_property(TARGET ${TARGET} PROPERTY SUFFIX ".html")
+  set(CMAKE_EXECUTABLE_SUFFIX ".html" CACHE INTERNAL "")
 endif()
 
 # On Windows, copy SDL3.dll to the build directory
